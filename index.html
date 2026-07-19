@@ -7,18 +7,17 @@
     <style>
         body { margin: 0; background: #000; font-family: sans-serif; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
         
-        /* منطقة المعاينة */
-        #preview-area { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; transition: height 0.3s ease; }
+        #preview-area { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; transition: height 0.3s ease; width: 100%; }
         
-        /* النص العائم */
-        #text-container { position: absolute; padding: 20px; background: rgba(0,0,0,0.5); border: 2px solid #d4b46a; border-radius: 10px; touch-action: none; cursor: move; }
+        #text-container { position: absolute; padding: 20px; background: rgba(0,0,0,0.5); border: 2px solid #d4b46a; border-radius: 10px; touch-action: none; cursor: move; color: #d4b46a; z-index: 10; }
         
-        /* شريط الأدوات السفلي */
-        #main-dock { height: 70px; background: #0f1f38; display: flex; justify-content: space-around; align-items: center; border-top: 2px solid #d4b46a; }
-        .icon { color: #d4b46a; font-size: 1.5rem; cursor: pointer; }
-        
-        /* منطقة الأدوات الفرعية (تظهر عند اللمس) */
-        #sub-dock { height: 60px; background: #1a3055; display: none; align-items: center; justify-content: center; gap: 20px; }
+        /* الشريط السفلي المثبت - الحل الجذري */
+        #main-dock { 
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; 
+            background: #0f1f38; display: flex; justify-content: space-around; 
+            align-items: center; border-top: 2px solid #d4b46a; z-index: 100;
+        }
+        .icon { color: #d4b46a; font-size: 1.5rem; padding: 10px; }
     </style>
 </head>
 <body>
@@ -29,40 +28,22 @@
         </div>
     </div>
 
-    <!-- الأدوات الفرعية -->
-    <div id="sub-dock">
-        <button onclick="alert('تفعيل تحريك النص')">تحريك</button>
-        <button onclick="alert('تغيير الخط')">الخط</button>
-    </div>
-
-    <!-- الشريط الرئيسي -->
     <div id="main-dock">
-        <div class="icon" onclick="toggleSubDock()">🖼️</div> <!-- الخلفية -->
-        <div class="icon" onclick="toggleSubDock()">🖋️</div> <!-- النص -->
-        <div class="icon" onclick="toggleSubDock()">⚙️</div> <!-- الإطار -->
-        <div class="icon">💾</div> <!-- التصدير -->
+        <div class="icon" onclick="alert('فتح معرض الصور')">🖼️</div>
+        <div class="icon" onclick="alert('تعديل النص')">🖋️</div>
+        <div class="icon" onclick="alert('تنسيق الإطار')">⚙️</div>
+        <div class="icon" onclick="alert('حفظ العمل')">💾</div>
     </div>
 
     <script>
-        function toggleSubDock() {
-            const subDock = document.getElementById('sub-dock');
-            const preview = document.getElementById('preview-area');
-            if (subDock.style.display === 'flex') {
-                subDock.style.display = 'none';
-                preview.style.height = '100%';
-            } else {
-                subDock.style.display = 'flex';
-                preview.style.height = '70%'; /* تقلص الشاشة */
-            }
-        }
-
-        // تحريك النص باللمس (Touch Support)
         const container = document.getElementById('text-container');
+        // تحريك باللمس
         container.addEventListener('touchmove', (e) => {
+            e.preventDefault();
             const touch = e.touches[0];
-            container.style.left = touch.clientX - 50 + 'px';
-            container.style.top = touch.clientY - 50 + 'px';
-        });
+            container.style.left = (touch.clientX - container.offsetWidth/2) + 'px';
+            container.style.top = (touch.clientY - container.offsetHeight/2) + 'px';
+        }, {passive: false});
     </script>
 </body>
 </html>
