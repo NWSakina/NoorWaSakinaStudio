@@ -1,57 +1,33 @@
-‎<!DOCTYPE html>
-‎<html lang="ar" dir="rtl">
-‎<head>
-‎<meta charset="UTF-8">
-‎<meta name="viewport" content="width=device-width, initial-scale=1.0">
-‎<title>NoorWaSakinaStudio</title>
-‎
-‎<style>
-‎body{
-‎    margin:0;
-‎    background:#0f1f38;
-‎    color:white;
-‎    font-family:Tahoma,sans-serif;
-‎    display:flex;
-‎    justify-content:center;
-‎    align-items:center;
-‎    height:100vh;
-‎}
-‎
-‎.box{
-‎    text-align:center;
-‎    padding:30px;
-‎    border:2px solid #d4b46a;
-‎    border-radius:20px;
-‎    background:rgba(255,255,255,.05);
-‎}
-‎
-‎h1{
-‎    color:#f5d98b;
-‎    margin-bottom:10px;
-‎}
-‎
-‎p{
-‎    color:#ddd;
-‎}
-‎</style>
-‎
-‎</head>
-‎
-‎<body>
-‎
-‎<div class="box">
-‎<h1>🌿 NoorWaSakinaStudio</h1>
-‎
-‎<p>
-‎بسم الله الرحمن الرحيم
-‎</p>
-‎
-‎<p>
-‎أول إصدار من الاستوديو القرآني
-‎</p>
-‎
-‎</div>
-‎
-‎</body>
-‎</html>
-‎
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>استوديو نور وسكينة</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; margin: 0; }
+        
+        /* منطقة العرض */
+        #preview-area { flex: 2; background: #0f1f38; color: white; display: flex; justify-content: center; align-items: center; border-bottom: 5px solid #d4b46a; }
+        
+        /* منطقة التحكم */
+        #control-panel { flex: 1; padding: 20px; background: #f4f4f4; display: flex; gap: 10px; }
+        
+        button { padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. منطقة العرض: هنا سيظهر الفيديو -->
+    <div id="preview-area">
+        <h1>شاشة المعاينة - هنا سيظهر الفيديو</h1>
+    </div>
+
+    <!-- 2. منطقة التحكم: هنا ستضع أزرارك -->
+    <div id="control-panel">
+        <button>اختيار السورة</button>
+        <button>اختيار الخلفية</button>
+        <button>تصدير الفيديو</button>
+    </div>
+
+</body>
+</html>
