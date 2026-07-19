@@ -7,17 +7,7 @@
         body { font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; margin: 0; }
         #preview-area { flex: 2; background: #0f1f38; color: #d4b46a; display: flex; justify-content: center; align-items: center; border-bottom: 5px solid #d4b46a; font-size: 1.5rem; }
         #control-panel { flex: 1; padding: 20px; background: #0f1f38; display: flex; gap: 15px; justify-content: center; align-items: center; }
-        button { 
-            padding: 15px 30px; 
-            cursor: pointer; 
-            background-color: #d4b46a; 
-            color: #0f1f38; 
-            border: none; 
-            border-radius: 8px; 
-            font-weight: bold;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
+        button { padding: 15px 30px; cursor: pointer; background-color: #d4b46a; color: #0f1f38; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; transition: 0.3s; }
         button:hover { background-color: #b89650; }
     </style>
 </head>
@@ -28,10 +18,17 @@
     </div>
 
     <div id="control-panel">
-        <button>اختيار السورة</button>
+        <!-- أضفنا خاصية onclick لزر اختيار السورة -->
+        <button onclick="chooseSurah()">اختيار السورة</button>
         <button>اختيار الخلفية</button>
         <button>تصدير الفيديو</button>
     </div>
 
+    <script>
+        function chooseSurah() {
+            alert("جارٍ فتح قائمة السور.. استعد للاختيار!");
+            // لاحقاً سنضيف هنا كود يفتح نافذة لاختيار السور
+        }
+    </script>
 </body>
 </html>
