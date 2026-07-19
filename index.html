@@ -1,11 +1,75 @@
-// أضف هذا الجزء في دالة التحريك لضمان سلاسة الإطار
-const container = document.getElementById('text-container');
-container.style.touchAction = 'none'; // لضمان عدم تعارض اللمس
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>استوديو نور وسكينة</title>
+    <style>
+        body { margin: 0; background: #000; font-family: sans-serif; overflow: hidden; height: 100vh; background-size: cover; background-position: center; }
+        #preview-area { height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; width: 100%; }
+        
+        #text-container { 
+            position: absolute; padding: 20px; border: 2px solid #d4b46a; 
+            border-radius: 10px; touch-action: none; cursor: move;
+            background: rgba(0,0,0,0.4); z-index: 10;
+        }
+        #text-content {
+            color: #d4b46a; font-family: sans-serif; font-size: 24px;
+            text-align: center; pointer-events: none;
+        }
 
-container.addEventListener('pointermove', (e) => {
-    if (e.pointerType === 'touch') {
-        e.preventDefault();
-        container.style.left = (e.clientX - container.offsetWidth/2) + 'px';
-        container.style.top = (e.clientY - container.offsetHeight/2) + 'px';
-    }
-}, {passive: false});
+        #main-dock { position: fixed; bottom: 0; width: 100%; height: 70px; background: #0f1f38; display: flex; align-items: center; overflow-x: auto; border-top: 2px solid #d4b46a; z-index: 100; }
+        .icon { min-width: 60px; text-align: center; font-size: 1.5rem; cursor: pointer; color: #d4b46a; }
+        #sub-dock { position: fixed; bottom: 70px; width: 100%; height: 60px; background: #1a3055; display: none; align-items: center; z-index: 99; }
+        .sub-btn { background: #334e77; color: #fff; border: 1px solid #d4b46a; padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; margin-left: 5px; }
+    </style>
+</head>
+<body>
+
+    <div id="preview-area">
+        <div id="text-container">
+            <div id="text-content">باسم الله الرحمن الرحيم</div>
+        </div>
+    </div>
+
+    <div id="sub-dock"><div id="sub-options" style="display: flex; padding: 0 10px; overflow-x: auto; width: 100%;"></div></div>
+
+    <div id="main-dock">
+        <div class="icon" onclick="openSub('نص')">🖋️</div>
+        <div class="icon" onclick="openSub('صور/فيديو')">🖼️</div>
+    </div>
+
+    <script>
+        function openSub(tool) {
+            const sub = document.getElementById('sub-dock');
+            const subOptions = document.getElementById('sub-options');
+            sub.style.display = 'flex';
+            if (tool === 'نص') {
+                subOptions.innerHTML = `
+                    <input type="text" id="textInput" placeholder="اكتب النص..." style="padding: 5px;">
+                    <button class="sub-btn" onclick="updateText()">تغيير</button>
+                    <button class="sub-btn" onclick="adjustSize(2)">➕</button>
+                    <button class="sub-btn" onclick="adjustSize(-2)">➖</button>
+                `;
+            }
+        }
+        function updateText() {
+            const val = document.getElementById('textInput').value;
+            if (val) document.getElementById('text-content').innerText = val;
+        }
+        function adjustSize(delta) {
+            const el = document.getElementById('text-content');
+            let size = parseInt(window.getComputedStyle(el).fontSize);
+            el.style.fontSize = (size + delta) + 'px';
+        }
+        const container = document.getElementById('text-container');
+        container.addEventListener('pointermove', (e) => {
+            if (e.pointerType === 'touch') {
+                e.preventDefault();
+                container.style.left = (e.clientX - container.offsetWidth/2) + 'px';
+                container.style.top = (e.clientY - container.offsetHeight/2) + 'px';
+            }
+        }, {passive: false});
+    </script>
+</body>
+    </html>
