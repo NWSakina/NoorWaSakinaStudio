@@ -5,45 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>استوديو نور وسكينة</title>
     <style>
-        body { margin: 0; background: #000; font-family: sans-serif; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        body { margin: 0; background: #000; font-family: sans-serif; overflow: hidden; height: 100vh; }
         
-        #preview-area { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; transition: height 0.3s ease; width: 100%; }
+        #preview-area { height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; transition: height 0.3s; }
         
-        #text-container { position: absolute; padding: 20px; background: rgba(0,0,0,0.5); border: 2px solid #d4b46a; border-radius: 10px; touch-action: none; cursor: move; color: #d4b46a; z-index: 10; }
+        #text-container { position: absolute; padding: 20px; border: 2px solid #d4b46a; border-radius: 10px; touch-action: none; color: #d4b46a; z-index: 10; }
         
-        /* الشريط السفلي المثبت - الحل الجذري */
+        /* الشريط الرئيسي القابل للتمرير */
         #main-dock { 
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; 
-            background: #0f1f38; display: flex; justify-content: space-around; 
-            align-items: center; border-top: 2px solid #d4b46a; z-index: 100;
+            position: fixed; bottom: 0; width: 100%; height: 70px; background: #0f1f38; 
+            display: flex; align-items: center; overflow-x: auto; border-top: 2px solid #d4b46a; z-index: 100;
         }
-        .icon { color: #d4b46a; font-size: 1.5rem; padding: 10px; }
+        .icon { min-width: 60px; text-align: center; font-size: 1.5rem; cursor: pointer; }
+        
+        /* الشريط الثانوي */
+        #sub-dock { 
+            position: fixed; bottom: 70px; width: 100%; height: 50px; background: #1a3055; 
+            display: none; align-items: center; justify-content: space-around; z-index: 99;
+        }
     </style>
 </head>
 <body>
 
     <div id="preview-area">
-        <div id="text-container">
-            <span id="preview-text">الآية الكريمة</span>
-        </div>
+        <div id="text-container">الآية الكريمة</div>
+    </div>
+
+    <div id="sub-dock">
+        <span id="sub-options">...</span>
     </div>
 
     <div id="main-dock">
-        <div class="icon" onclick="alert('فتح معرض الصور')">🖼️</div>
-        <div class="icon" onclick="alert('تعديل النص')">🖋️</div>
-        <div class="icon" onclick="alert('تنسيق الإطار')">⚙️</div>
-        <div class="icon" onclick="alert('حفظ العمل')">💾</div>
+        <div class="icon" onclick="openSub('قوالب')">📋</div>
+        <div class="icon" onclick="openSub('نص')">🖋️</div>
+        <div class="icon" onclick="openSub('صور/فيديو')">🖼️</div>
+        <div class="icon" onclick="openSub('صوت/تزامن')">🔊</div>
+        <div class="icon" onclick="undo()">↩️</div>
+        <div class="icon" onclick="redo()">↪️</div>
+        <div class="icon" onclick="alert('حفظ')">💾</div>
     </div>
 
     <script>
+        function openSub(tool) {
+            const sub = document.getElementById('sub-dock');
+            sub.style.display = 'flex';
+            document.getElementById('sub-options').innerText = `أدوات الـ ${tool}`;
+        }
+
         const container = document.getElementById('text-container');
-        // تحريك باللمس
         container.addEventListener('touchmove', (e) => {
-            e.preventDefault();
             const touch = e.touches[0];
-            container.style.left = (touch.clientX - container.offsetWidth/2) + 'px';
-            container.style.top = (touch.clientY - container.offsetHeight/2) + 'px';
+            container.style.left = (touch.clientX - 50) + 'px';
+            container.style.top = (touch.clientY - 50) + 'px';
         }, {passive: false});
     </script>
 </body>
-</html>
+    </html>
