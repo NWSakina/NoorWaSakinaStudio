@@ -5,24 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>استوديو نور وسكينة</title>
     <style>
-        body { margin: 0; background: #000; font-family: sans-serif; overflow: hidden; height: 100vh; }
+        body { 
+            margin: 0; 
+            background: #000; 
+            font-family: sans-serif; 
+            overflow: hidden; 
+            height: 100vh; 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background 0.3s ease;
+        }
         
-        #preview-area { height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; transition: height 0.3s; }
+        #preview-area { height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; width: 100%; }
         
-        #text-container { position: absolute; padding: 20px; border: 2px solid #d4b46a; border-radius: 10px; touch-action: none; color: #d4b46a; z-index: 10; }
+        #text-container { position: absolute; padding: 20px; border: 2px solid #d4b46a; border-radius: 10px; touch-action: none; color: #d4b46a; z-index: 10; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); }
         
         /* الشريط الرئيسي القابل للتمرير */
         #main-dock { 
             position: fixed; bottom: 0; width: 100%; height: 70px; background: #0f1f38; 
             display: flex; align-items: center; overflow-x: auto; border-top: 2px solid #d4b46a; z-index: 100;
         }
-        .icon { min-width: 60px; text-align: center; font-size: 1.5rem; cursor: pointer; }
+        .icon { min-width: 60px; text-align: center; font-size: 1.5rem; cursor: pointer; color: #d4b46a; }
         
-        /* الشريط الثانوي */
+        /* الشريط الثانوي المتجاوب القابل للتمرير الأفقي أيضاً */
         #sub-dock { 
-            position: fixed; bottom: 70px; width: 100%; height: 50px; background: #1a3055; 
-            display: none; align-items: center; justify-content: space-around; z-index: 99;
+            position: fixed; bottom: 70px; width: 100%; height: 55px; background: #1a3055; 
+            display: none; align-items: center; z-index: 99; border-top: 1px solid rgba(212, 180, 106, 0.3);
         }
+        #sub-options { width: 100%; }
+        
+        /* أزرار الأدوات الفرعية */
+        .sub-btn { background: #334e77; color: #fff; border: 1px solid #d4b46a; padding: 6px 12px; border-radius: 5px; font-size: 0.85rem; flex-shrink: 0; }
+        .color-dot { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #d4b46a; flex-shrink: 0; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -31,32 +46,88 @@
         <div id="text-container">الآية الكريمة</div>
     </div>
 
+    <!-- الشريط الثانوي -->
     <div id="sub-dock">
-        <span id="sub-options">...</span>
+        <div id="sub-options"></div>
     </div>
 
+    <!-- الشريط الرئيسي -->
     <div id="main-dock">
         <div class="icon" onclick="openSub('قوالب')">📋</div>
         <div class="icon" onclick="openSub('نص')">🖋️</div>
         <div class="icon" onclick="openSub('صور/فيديو')">🖼️</div>
         <div class="icon" onclick="openSub('صوت/تزامن')">🔊</div>
-        <div class="icon" onclick="undo()">↩️</div>
-        <div class="icon" onclick="redo()">↪️</div>
+        <div class="icon" onclick="alert('تراجع')">↩️</div>
+        <div class="icon" onclick="alert('تقدم')">↪️</div>
         <div class="icon" onclick="alert('حفظ')">💾</div>
     </div>
 
     <script>
         function openSub(tool) {
             const sub = document.getElementById('sub-dock');
+            const subOptions = document.getElementById('sub-options');
             sub.style.display = 'flex';
-            document.getElementById('sub-options').innerText = `أدوات الـ ${tool}`;
+            
+            if (tool === 'صور/فيديو') {
+                // توليد قائمة خيارات الخلفية مدمجة وقابلة للتمرير بلمسة إصبع
+                subOptions.innerHTML = `
+                    <div style="display: flex; gap: 12px; align-items: center; padding: 0 15px; overflow-x: auto; white-space: nowrap; height: 100%;">
+                        <!-- الرفع من الجهاز -->
+                        <input type="file" id="bgInput" accept="image/*,video/*" style="display:none" onchange="loadBackground(event)">
+                        <button class="sub-btn" onclick="document.getElementById('bgInput').click()" style="background: #d4b46a; color: #0f1f38; font-weight: bold;">📁 جهازك</button>
+                        
+                        <span style="color: #d4b46a; opacity: 0.5;">|</span>
+                        
+                        <!-- ألوان سادة محترفة -->
+                        <div class="color-dot" onclick="setBgColor('#000000')" style="background: #000;"></div>
+                        <div class="color-dot" onclick="setBgColor('#0a1424')" style="background: #0a1424;"></div>
+                        <div class="color-dot" onclick="setBgColor('#152238')" style="background: #152238;"></div>
+                        <div class="color-dot" onclick="setBgColor('#1c1c1c')" style="background: #1c1c1c;"></div>
+                        
+                        <span style="color: #d4b46a; opacity: 0.5;">|</span>
+                        
+                        <!-- صور جاهزة عالية الجودة وتناسب النص الذهبي -->
+                        <button class="sub-btn" onclick="loadTemplate('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600')">🌅 داكنة مجردة</button>
+                        <button class="sub-btn" onclick="loadTemplate('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600')">🌊 بحر هادئ</button>
+                        <button class="sub-btn" onclick="loadTemplate('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=600')">🌌 سماء ونجوم</button>
+                    </div>
+                `;
+            } else {
+                subOptions.innerHTML = `<div style="color:#d4b46a; padding: 15px; font-size: 0.9rem;">أدوات الـ ${tool} (سيتم برمجتها قريباً)</div>`;
+            }
         }
 
+        // دالة تغيير لون الخلفية
+        function setBgColor(color) {
+            document.body.style.backgroundImage = 'none';
+            document.body.style.backgroundColor = color;
+        }
+
+        // دالة تحميل الصور الجاهزة
+        function loadTemplate(url) {
+            document.body.style.backgroundColor = 'transparent';
+            document.body.style.backgroundImage = `url('${url}')`;
+        }
+
+        // دالة رفع صورة من الهاتف
+        function loadBackground(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.body.style.backgroundImage = `url('${e.target.result}')`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // تحريك الإطار باللمس
         const container = document.getElementById('text-container');
         container.addEventListener('touchmove', (e) => {
+            e.preventDefault();
             const touch = e.touches[0];
-            container.style.left = (touch.clientX - 50) + 'px';
-            container.style.top = (touch.clientY - 50) + 'px';
+            container.style.left = (touch.clientX - container.offsetWidth/2) + 'px';
+            container.style.top = (touch.clientY - container.offsetHeight/2) + 'px';
         }, {passive: false});
     </script>
 </body>
