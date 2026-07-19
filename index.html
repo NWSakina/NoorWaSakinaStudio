@@ -1,41 +1,11 @@
-<style>
-    /* الإطار (الكتلة) */
-    #text-container { 
-        position: absolute; padding: 20px; border: 2px solid #d4b46a; 
-        border-radius: 10px; touch-action: none; cursor: move;
-        background: rgba(0,0,0,0.3); min-width: 100px;
-        z-index: 10;
-    }
-    /* النص (المحرر) */
-    #text-content {
-        color: #d4b46a; font-family: 'Amiri', serif; font-size: 24px;
-        text-align: center; outline: none; /* لإخفاء حدود التحرير */
-    }
-</style>
+// أضف هذا الجزء في دالة التحريك لضمان سلاسة الإطار
+const container = document.getElementById('text-container');
+container.style.touchAction = 'none'; // لضمان عدم تعارض اللمس
 
-<!-- الهيكل المعدل -->
-<div id="preview-area">
-    <div id="text-container">
-        <!-- contenteditable تجعل النص قابلاً للتعديل مباشرة -->
-        <div id="text-content" contenteditable="true">باسم الله الرحمن الرحيم</div>
-    </div>
-</div>
-
-<script>
-    // تحريك الإطار فقط (وليس النص بداخله)
-    const container = document.getElementById('text-container');
-    container.addEventListener('touchmove', (e) => {
-        // نمنع التحريك إذا كان المستخدم يضغط على النص للتعديل
-        if (e.target.id === 'text-content') return; 
-        
+container.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') {
         e.preventDefault();
-        const touch = e.touches[0];
-        container.style.left = (touch.clientX - container.offsetWidth/2) + 'px';
-        container.style.top = (touch.clientY - container.offsetHeight/2) + 'px';
-    }, {passive: false});
-
-    // التحكم في الخطوط للنص الموجود داخل الإطار
-    function changeFont(fontFamily) {
-        document.getElementById('text-content').style.fontFamily = fontFamily;
+        container.style.left = (e.clientX - container.offsetWidth/2) + 'px';
+        container.style.top = (e.clientY - container.offsetHeight/2) + 'px';
     }
-                               </script>
+}, {passive: false});
