@@ -17,6 +17,7 @@
     <h1>🌿 استوديو نور وسكينة</h1>
 </header>
 
+
 <main id="workspace">
 
     <div id="preview">
@@ -33,6 +34,38 @@
 
 </main>
 
+
+<!-- لوحة التحكم -->
+<section id="control-panel">
+
+    <div id="text-panel" class="panel">
+        <h3>🖋️ إعدادات النص</h3>
+
+        <button onclick="increaseText()">تكبير الخط</button>
+        <button onclick="decreaseText()">تصغير الخط</button>
+
+    </div>
+
+
+    <div id="bg-panel" class="panel">
+        <h3>🖼️ الخلفية</h3>
+
+        <button onclick="changeBackground()">تغيير الخلفية</button>
+
+    </div>
+
+
+    <div id="effects-panel" class="panel">
+        <h3>✨ المؤثرات</h3>
+
+        <button onclick="addGlow()">إضاءة النص</button>
+
+    </div>
+
+
+</section>
+
+
 <nav id="main-dock">
 
     <button id="textBtn">🖋️ النص</button>
@@ -45,8 +78,9 @@
 
 </nav>
 
+
 <script src="script.js"></script>
 
 </body>
 
-  </html>
+        </html>
