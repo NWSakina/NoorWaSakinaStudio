@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>استوديو نور وسكينة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lateef&display=swap" rel="stylesheet">
+    <!-- استدعاء دقيق للخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Lateef&family=Scheherazade+New&display=swap" rel="stylesheet">
     <style>
         body { margin: 0; background: #000; font-family: sans-serif; overflow: hidden; height: 100vh; background-size: cover; background-position: center; }
         #text-container { position: absolute; padding: 20px; border: 2px solid #d4b46a; border-radius: 10px; touch-action: none; cursor: move; background: rgba(0,0,0,0.3); z-index: 10; min-width: 150px; }
-        #text-content { color: #d4b46a; font-family: 'Amiri', serif; font-size: 24px; text-align: center; pointer-events: none; }
+        #text-content { color: #d4b46a; font-family: 'Amiri', serif; font-size: 24px; text-align: center; pointer-events: none; transition: font-family 0.3s; }
         #main-dock { position: fixed; bottom: 0; width: 100%; height: 60px; background: #0f1f38; display: flex; align-items: center; justify-content: space-around; border-top: 2px solid #d4b46a; z-index: 100; }
         .icon { font-size: 1.5rem; cursor: pointer; color: #d4b46a; }
         #sub-dock { position: fixed; bottom: 60px; width: 100%; height: 70px; background: #1a3055; display: none; align-items: center; padding: 5px; overflow-x: auto; z-index: 99; border-top: 1px solid #d4b46a; }
@@ -39,13 +40,14 @@
             sub.style.display = 'flex';
             if (tool === 'نص') {
                 opt.innerHTML = `
-                    <input type="text" id="textInput" placeholder="النص..." style="width: 70px; padding: 5px; border-radius: 5px;">
+                    <input type="text" id="textInput" placeholder="اكتب..." style="width: 70px; padding: 5px;">
                     <button class="sub-btn" onclick="updateText()">تطبيق</button>
                     <button class="sub-btn" onclick="adjustSize(2)">➕</button>
                     <button class="sub-btn" onclick="adjustSize(-2)">➖</button>
-                    <button class="sub-btn" onclick="changeFont('Lateef')">خط لطيف</button>
+                    <button class="sub-btn" onclick="changeFont('Amiri')">Amiri</button>
+                    <button class="sub-btn" onclick="changeFont('Lateef')">Lateef</button>
+                    <button class="sub-btn" onclick="changeFont('Scheherazade New')">Scheherazade</button>
                     <div class="color-dot" style="background:#D4AF37" onclick="changeColor('#D4AF37')"></div>
-                    <div class="color-dot" style="background:#FFF" onclick="changeColor('#FFF')"></div>
                 `;
             } else {
                 opt.innerHTML = `
@@ -70,4 +72,4 @@
         }, {passive: false});
     </script>
 </body>
-    </html>
+</html>
