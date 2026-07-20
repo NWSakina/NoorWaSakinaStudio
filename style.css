@@ -143,3 +143,50 @@ body{
 
     background:#00d487;
     }
+/* =========================
+   تحسينات التفاعل
+========================= */
+
+#main-dock button:active{
+    transform:scale(.92);
+}
+
+
+#text-content:focus{
+    background:rgba(212,175,55,.08);
+    border-radius:12px;
+}
+
+
+/* تحسين الهاتف */
+
+@media(max-width:600px){
+
+    #top-bar{
+        height:65px;
+    }
+
+    #top-bar h1{
+        font-size:22px;
+    }
+
+
+    #text-content{
+        font-size:30px;
+    }
+
+
+    #main-dock{
+        height:80px;
+    }
+
+
+    #main-dock button{
+
+        width:60px;
+        height:60px;
+        font-size:12px;
+
+    }
+
+                              }
