@@ -1,5 +1,5 @@
 /* =====================================
-   NoorWaSakina Studio v1.0
+   NoorWaSakina Studio v1.1
 ===================================== */
 
 *{
@@ -16,6 +16,7 @@ body{
     display:flex;
     flex-direction:column;
 }
+
 
 /* =========================
    رأس الصفحة
@@ -36,6 +37,7 @@ body{
     font-weight:bold;
 }
 
+
 /* =========================
    منطقة العمل
 ========================= */
@@ -46,7 +48,6 @@ body{
     overflow:hidden;
 }
 
-/* شاشة المعاينة */
 
 #preview{
     width:100%;
@@ -60,11 +61,15 @@ body{
     position:relative;
 }
 
-/* إطار الآيات */
+
+/* إطار النص */
 
 #text-container{
+
     margin-top:60px;
+
     width:85%;
+
     padding:20px;
 
     background:rgba(255,255,255,0.08);
@@ -74,7 +79,9 @@ body{
     border-radius:22px;
 
     backdrop-filter:blur(8px);
+
 }
+
 
 /* النص */
 
@@ -93,7 +100,82 @@ body{
     outline:none;
 
     text-shadow:0 0 12px rgba(255,230,150,.4);
+
 }
+
+
+/* =========================
+   لوحة التحكم
+========================= */
+
+#control-panel{
+
+    position:absolute;
+
+    bottom:95px;
+
+    right:20px;
+
+    left:20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    z-index:10;
+
+}
+
+
+.panel{
+
+    display:none;
+
+    background:#16233d;
+
+    border:2px solid #d4af37;
+
+    border-radius:18px;
+
+    padding:15px;
+
+    text-align:center;
+
+    width:90%;
+
+    max-width:400px;
+
+}
+
+
+.panel h3{
+
+    color:#d4af37;
+
+    margin-bottom:15px;
+
+}
+
+
+.panel button{
+
+    background:#00b977;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:10px 15px;
+
+    margin:5px;
+
+    font-family:'Cairo';
+
+}
+
+
 
 /* =========================
    شريط الأدوات
@@ -112,7 +194,9 @@ body{
     justify-content:space-evenly;
 
     align-items:center;
+
 }
+
 
 #main-dock button{
 
@@ -135,58 +219,78 @@ body{
     cursor:pointer;
 
     transition:.25s;
+
 }
+
 
 #main-dock button:hover{
 
     transform:translateY(-3px);
 
     background:#00d487;
-    }
-/* =========================
-   تحسينات التفاعل
-========================= */
+
+}
+
 
 #main-dock button:active{
+
     transform:scale(.92);
+
 }
 
 
 #text-content:focus{
+
     background:rgba(212,175,55,.08);
+
     border-radius:12px;
+
 }
 
 
-/* تحسين الهاتف */
+
+/* =========================
+   الهاتف
+========================= */
 
 @media(max-width:600px){
 
     #top-bar{
+
         height:65px;
+
     }
 
+
     #top-bar h1{
+
         font-size:22px;
+
     }
 
 
     #text-content{
+
         font-size:30px;
+
     }
 
 
     #main-dock{
+
         height:80px;
+
     }
 
 
     #main-dock button{
 
         width:60px;
+
         height:60px;
+
         font-size:12px;
 
     }
 
-                              }
+}
