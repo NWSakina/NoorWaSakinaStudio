@@ -1,4 +1,7 @@
-/* NoorWaSakina Studio */
+/* ===========================
+   NoorWaSakina Studio
+   Version 1.0
+=========================== */
 
 *{
     margin:0;
@@ -7,36 +10,149 @@
 }
 
 body{
-    font-family:Arial, sans-serif;
-    background:#0d1117;
-    color:white;
-    line-height:1.6;
+    font-family:'Cairo',sans-serif;
+    background:#0b1220;
+    color:#ffffff;
+    height:100vh;
+    overflow:hidden;
 }
 
-header{
-    background:#161b22;
-    padding:20px;
+/* الشريط العلوي */
+
+#top-bar{
+    height:65px;
+    background:#14213d;
+    border-bottom:2px solid #d4af37;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#top-bar h1{
+    font-size:22px;
+    color:#d4af37;
+    font-weight:bold;
+}
+
+/* مساحة العمل */
+
+#workspace{
+    height:calc(100vh - 130px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+
+/* شاشة المعاينة */
+
+#preview{
+
+    width:100%;
+    max-width:420px;
+
+    height:100%;
+
+    background:linear-gradient(
+        to bottom,
+        #3b5d8a,
+        #0f1726
+    );
+
+    border:2px solid #d4af37;
+
+    border-radius:18px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+/* صندوق الآيات */
+
+#text-container{
+
+    position:absolute;
+
+    top:120px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:85%;
+
+    padding:18px;
+
+    background:rgba(0,0,0,.35);
+
+    border:2px solid #d4af37;
+
+    border-radius:14px;
+
+    backdrop-filter:blur(6px);
+
+}
+
+/* النص */
+
+#text-content{
+
+    color:#f7e7a1;
+
+    font-size:28px;
+
     text-align:center;
+
+    line-height:2;
+
+    outline:none;
+
+    font-family:'Amiri',serif;
+
 }
 
-h1{
-    color:#00d084;
+/* الشريط السفلي */
+
+#main-dock{
+
+    height:65px;
+
+    background:#14213d;
+
+    border-top:2px solid #d4af37;
+
+    display:flex;
+
+    justify-content:space-evenly;
+
+    align-items:center;
+
 }
 
-main{
-    padding:20px;
-}
+/* الأزرار */
 
-button{
-    background:#00d084;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:8px;
-    cursor:pointer;
+#main-dock button{
+
+    background:#1f355d;
+
+    color:#fff;
+
+    border:1px solid #d4af37;
+
+    border-radius:10px;
+
+    padding:10px 16px;
+
     font-size:16px;
+
+    cursor:pointer;
+
 }
 
-button:hover{
-    opacity:.9;
-  }
+#main-dock button:active{
+
+    transform:scale(.96);
+
+    }
