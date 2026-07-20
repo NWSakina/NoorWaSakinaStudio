@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>استوديو نور وسكينة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Lateef&family=Scheherazade+New&family=Cairo:wght@400;700&display=swap&v=2" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Lateef&family=Scheherazade+New&family=Cairo:wght@400;700&display=swap&v=3" rel="stylesheet">
     <style>
-        body { margin: 0; background: #000; height: 100vh; overflow: hidden; }
+        body { margin: 0; background: #000; height: 100vh; overflow: hidden; transition: background 0.5s ease; }
         #text-container { position: absolute; left: 20px; top: 100px; padding: 15px; border: 2px solid #D4AF37; touch-action: none; background: rgba(0,0,0,0.5); }
         #text-content { color: #D4AF37; font-family: 'Cairo', sans-serif; font-size: 24px; outline: none; white-space: pre-wrap; font-feature-settings: "kern" 1, "onum" 1, "dlig" 1; line-height: 1.8; transition: all 0.3s ease; }
         #main-dock { position: fixed; bottom: 0; width: 100%; height: 60px; background: #0f1f38; display: flex; align-items: center; justify-content: space-around; border-top: 2px solid #D4AF37; z-index: 100; }
-        #sub-dock { position: fixed; bottom: 60px; width: 100%; display: none; flex-direction: column; background: #1a3055; border-top: 1px solid #D4AF37; padding: 10px; gap: 8px; z-index: 99; }
+        #sub-dock, #bg-dock { position: fixed; bottom: 60px; width: 100%; display: none; flex-direction: column; background: #1a3055; border-top: 1px solid #D4AF37; padding: 10px; gap: 8px; z-index: 99; }
         .icon { font-size: 1.5rem; cursor: pointer; }
         .row { display: flex; overflow-x: auto; gap: 5px; }
         button { background: #334e77; color: #fff; border: 1px solid #D4AF37; padding: 5px 12px; border-radius: 4px; white-space: nowrap; cursor: pointer; }
@@ -20,11 +20,11 @@
 
     <div id="text-container"><div id="text-content" contenteditable="true">باسم الله الرحمن الرحيم</div></div>
 
+    <!-- قائمة القلم -->
     <div id="sub-dock">
         <div class="row">
             <button onclick="changeStyle('fontFamily', 'Cairo')">Cairo</button>
             <button onclick="changeStyle('fontFamily', 'Amiri')">Amiri</button>
-            <button onclick="changeStyle('fontWeight', 'bold')">عريض</button>
             <button onclick="toggleGlow()">توهج</button>
         </div>
         <div class="row">
@@ -34,46 +34,52 @@
         <div class="row">
             <button onclick="changeStyle('color', '#D4AF37')">ذهبي</button>
             <button onclick="changeStyle('color', '#FFF')">أبيض</button>
-            <button onclick="changeStyle('color', '#FF4444')">أحمر</button>
+        </div>
+    </div>
+
+    <!-- قائمة الخلفيات -->
+    <div id="bg-dock">
+        <div class="row">
+            <button onclick="changeBg('#000')">أسود</button>
+            <button onclick="changeBg('#0f1f38')">أزرق داكن</button>
+            <button onclick="changeBg('#2c1e0f')">بني ملكي</button>
         </div>
     </div>
 
     <div id="main-dock">
-        <div class="icon" onclick="togglePen()">🖋️</div>
-        <div class="icon" onclick="alert('خلفيات')">🖼️</div>
-        <div class="icon" onclick="alert('حفظ')">💾</div>
+        <div class="icon" onclick="toggleMenu('sub-dock')">🖋️</div>
+        <div class="icon" onclick="toggleMenu('bg-dock')">🖼️</div>
+        <div class="icon" onclick="alert('ميزة الحفظ قريباً')">💾</div>
     </div>
 
     <script>
-        function togglePen() {
-            const sub = document.getElementById('sub-dock');
-            sub.style.display = (sub.style.display === 'flex') ? 'none' : 'flex';
+        function toggleMenu(id) {
+            const el = document.getElementById(id);
+            // إغلاق القائمة الأخرى إذا كانت مفتوحة
+            document.getElementById(id === 'sub-dock' ? 'bg-dock' : 'sub-dock').style.display = 'none';
+            el.style.display = (el.style.display === 'flex') ? 'none' : 'flex';
         }
-        function changeStyle(prop, val) {
-            const el = document.getElementById('text-content');
-            if(prop === 'color') { el.style.color = val; document.getElementById('text-container').style.borderColor = val; }
-            else el.style[prop] = val;
-        }
+        function changeBg(color) { document.body.style.background = color; }
+        function changeStyle(prop, val) { document.getElementById('text-content').style[prop] = val; }
         function changeSize(step) {
             const el = document.getElementById('text-content');
-            let currentSize = parseInt(window.getComputedStyle(el).fontSize);
-            el.style.fontSize = (currentSize + step) + 'px';
+            let size = parseInt(window.getComputedStyle(el).fontSize);
+            el.style.fontSize = (size + step) + 'px';
         }
-        let glowActive = false;
+        let glow = false;
         function toggleGlow() {
-            glowActive = !glowActive;
+            glow = !glow;
             const el = document.getElementById('text-content');
-            const color = el.style.color || '#D4AF37';
-            el.style.textShadow = glowActive ? `0 0 10px ${color}, 0 0 20px ${color}` : 'none';
+            el.style.textShadow = glow ? `0 0 10px ${el.style.color || '#D4AF37'}` : 'none';
         }
-        const el = document.getElementById('text-container');
-        el.addEventListener('pointermove', (e) => {
+        // سحب النص
+        const container = document.getElementById('text-container');
+        container.addEventListener('pointermove', (e) => {
             if(e.pointerType === 'touch' && document.activeElement.id !== 'text-content') {
-                e.preventDefault();
-                el.style.left = (e.clientX - el.offsetWidth/2) + 'px';
-                el.style.top = (e.clientY - el.offsetHeight/2) + 'px';
+                container.style.left = (e.clientX - 50) + 'px';
+                container.style.top = (e.clientY - 50) + 'px';
             }
-        }, {passive: false});
+        });
     </script>
 </body>
-            </html>
+            </html> 
