@@ -7,14 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Lateef&family=Scheherazade+New&display=swap" rel="stylesheet">
     <style>
         body { margin: 0; background: #000; font-family: sans-serif; overflow: hidden; height: 100vh; background-size: cover; background-position: center; }
-        #text-container { position: absolute; padding: 20px; border: 2px solid #d4b46a; border-radius: 10px; touch-action: none; cursor: move; background: rgba(0,0,0,0.3); z-index: 10; min-width: 150px; }
-        /* النص الآن قابل للتعديل باللمس */
-        #text-content { color: #d4b46a; font-family: 'Amiri', serif; font-size: 24px; text-align: center; outline: none; }
-        #main-dock { position: fixed; bottom: 0; width: 100%; height: 60px; background: #0f1f38; display: flex; align-items: center; justify-content: space-around; border-top: 2px solid #d4b46a; z-index: 100; }
+        #text-container { position: absolute; padding: 15px; border: 2px solid #D4AF37; border-radius: 10px; touch-action: none; background: rgba(0,0,0,0.4); z-index: 10; min-width: 150px; }
+        #text-content { color: #D4AF37; font-family: 'Amiri', serif; font-size: 24px; text-align: center; outline: none; white-space: pre-wrap; }
+        #main-dock { position: fixed; bottom: 0; width: 100%; height: 60px; background: #0f1f38; display: flex; align-items: center; justify-content: space-around; border-top: 2px solid #D4AF37; z-index: 100; }
         .icon { font-size: 1.5rem; cursor: pointer; }
-        #sub-dock { position: fixed; bottom: 60px; width: 100%; height: 70px; background: #1a3055; display: none; align-items: center; padding: 5px; overflow-x: auto; z-index: 99; border-top: 1px solid #d4b46a; }
-        .sub-btn { background: #334e77; color: #fff; border: 1px solid #d4b46a; padding: 5px; margin: 2px; border-radius: 5px; font-size: 0.8rem; }
-        .color-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; margin: 2px; cursor: pointer; }
+        #sub-dock { position: fixed; bottom: 60px; width: 100%; height: 60px; background: #1a3055; display: none; align-items: center; padding: 5px; overflow-x: auto; z-index: 99; }
+        .btn-style { background: #334e77; color: #fff; border: 1px solid #D4AF37; padding: 8px; margin: 3px; border-radius: 5px; font-size: 0.9rem; white-space: nowrap; }
+        .color-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; margin: 3px; cursor: pointer; flex-shrink: 0; }
     </style>
 </head>
 <body>
@@ -23,40 +22,35 @@
         <div id="text-content" contenteditable="true">باسم الله الرحمن الرحيم</div>
     </div>
 
-    <div id="sub-dock"><div id="sub-options" style="display: flex; align-items: center; width: 100%;"></div></div>
+    <div id="sub-dock"><div id="sub-options" style="display: flex; align-items: center;"></div></div>
 
     <div id="main-dock">
-        <div class="icon" onclick="openSub('قلم')">🖋️</div>
-        <div class="icon" onclick="openSub('صور')">🖼️</div>
+        <div class="icon" onclick="toggleSub()">🖋️</div>
+        <div class="icon" onclick="alert('الصور')">🖼️</div>
         <div class="icon">💾</div>
     </div>
 
     <script>
-        function openSub(tool) {
+        function toggleSub() {
             const sub = document.getElementById('sub-dock');
-            const opt = document.getElementById('sub-options');
-            sub.style.display = 'flex';
-            
-            if (tool === 'قلم') {
-                opt.innerHTML = `
-                    <button class="sub-btn" onclick="changeFont('Amiri')">Amiri</button>
-                    <button class="sub-btn" onclick="changeFont('Lateef')">Lateef</button>
-                    <div class="color-dot" style="background:#D4AF37" onclick="changeColor('#D4AF37')"></div>
-                    <div class="color-dot" style="background:#FFF" onclick="changeColor('#FFF')"></div>
-                    <div class="color-dot" style="background:#FF4444" onclick="changeColor('#FF4444')"></div>
+            sub.style.display = (sub.style.display === 'flex') ? 'none' : 'flex';
+            if (sub.style.display === 'flex') {
+                document.getElementById('sub-options').innerHTML = `
+                    <div class="color-dot" style="background:#FF4444" onclick="setColor('#FF4444')"></div>
+                    <div class="color-dot" style="background:#FFF" onclick="setColor('#FFF')"></div>
+                    <div class="color-dot" style="background:#D4AF37" onclick="setColor('#D4AF37')"></div>
+                    <button class="btn-style" onclick="setFont('Amiri')">Amiri</button>
+                    <button class="btn-style" onclick="setFont('Lateef')">Lateef</button>
+                    <button class="btn-style" onclick="setFont('Scheherazade New')">Scheherazade</button>
                 `;
-            } else {
-                opt.innerHTML = `<button class="sub-btn" onclick="loadImg('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600')">داكن</button>`;
             }
         }
-        function changeFont(f) { document.getElementById('text-content').style.fontFamily = f; }
-        function changeColor(c) { document.getElementById('text-content').style.color = c; document.getElementById('text-container').style.borderColor = c; }
-        function loadImg(u) { document.body.style.backgroundImage = `url('${u}')`; }
+        function setColor(c) { document.getElementById('text-content').style.color = c; document.getElementById('text-container').style.borderColor = c; }
+        function setFont(f) { document.getElementById('text-content').style.fontFamily = f; }
 
-        // التحريك مخصص للإطار فقط
         const cont = document.getElementById('text-container');
         cont.addEventListener('pointermove', (e) => {
-            if (e.target.id === 'text-content') return; // السماح بالكتابة دون تحريك
+            if (document.activeElement.id === 'text-content') return;
             if (e.pointerType === 'touch') {
                 e.preventDefault();
                 cont.style.left = (e.clientX - cont.offsetWidth/2) + 'px';
@@ -65,4 +59,4 @@
         }, {passive: false});
     </script>
 </body>
-</html>      
+</html>
