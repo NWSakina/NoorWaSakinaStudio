@@ -1,40 +1,52 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>استوديو نور وسكينة</title>
 
-<link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استوديو نور وسكينة</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Amiri&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="workspace">
+<header id="top-bar">
+    <h1>🌿 استوديو نور وسكينة</h1>
+</header>
 
-<div id="text-container">
-<div id="text-content" contenteditable="true">
-باسم الله الرحمن الرحيم
-</div>
-</div>
+<main id="workspace">
 
-</div>
+    <div id="preview">
 
-<div id="sub-dock"></div>
+        <div id="text-container">
 
-<div id="bg-dock"></div>
+            <div id="text-content" contenteditable="true">
+بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ
+            </div>
 
-<div id="main-dock">
+        </div>
 
-<button id="penBtn">🖋️</button>
+    </div>
 
-<button id="bgBtn">🖼️</button>
+</main>
 
-<button id="saveBtn">💾</button>
+<nav id="main-dock">
 
-</div>
+    <button id="textBtn">🖋️ النص</button>
+
+    <button id="bgBtn">🖼️ الخلفية</button>
+
+    <button id="effectsBtn">✨ المؤثرات</button>
+
+    <button id="saveBtn">💾 حفظ</button>
+
+</nav>
 
 <script src="script.js"></script>
 
 </body>
-</html>
+
+  </html>
