@@ -4,25 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>استوديو نور وسكينة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Lateef&family=Scheherazade+New&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Lateef&family=Scheherazade+New&family=Cairo:wght@400;700&display=swap&v=2" rel="stylesheet">
     <style>
         body { margin: 0; background: #000; height: 100vh; overflow: hidden; }
         #text-container { position: absolute; left: 20px; top: 100px; padding: 15px; border: 2px solid #D4AF37; touch-action: none; background: rgba(0,0,0,0.5); }
         #text-content { color: #D4AF37; font-family: 'Cairo', sans-serif; font-size: 24px; outline: none; white-space: pre-wrap; font-feature-settings: "kern" 1, "onum" 1, "dlig" 1; line-height: 1.8; transition: all 0.3s ease; }
-        
         #main-dock { position: fixed; bottom: 0; width: 100%; height: 60px; background: #0f1f38; display: flex; align-items: center; justify-content: space-around; border-top: 2px solid #D4AF37; z-index: 100; }
-        #sub-dock { position: fixed; bottom: 60px; width: 100%; display: none; flex-direction: column; background: #1a3055; border-top: 1px solid #D4AF37; padding: 10px; gap: 10px; z-index: 99; }
-        
+        #sub-dock { position: fixed; bottom: 60px; width: 100%; display: none; flex-direction: column; background: #1a3055; border-top: 1px solid #D4AF37; padding: 10px; gap: 8px; z-index: 99; }
         .icon { font-size: 1.5rem; cursor: pointer; }
         .row { display: flex; overflow-x: auto; gap: 5px; }
-        button { background: #334e77; color: #fff; border: 1px solid #D4AF37; padding: 5px 10px; border-radius: 4px; white-space: nowrap; cursor: pointer; }
+        button { background: #334e77; color: #fff; border: 1px solid #D4AF37; padding: 5px 12px; border-radius: 4px; white-space: nowrap; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div id="text-container"><div id="text-content" contenteditable="true">باسم الله الرحمن الرحيم</div></div>
 
-    <!-- القائمة الفرعية التي تظهر عند ضغط القلم -->
     <div id="sub-dock">
         <div class="row">
             <button onclick="changeStyle('fontFamily', 'Cairo')">Cairo</button>
@@ -31,13 +28,16 @@
             <button onclick="toggleGlow()">توهج</button>
         </div>
         <div class="row">
+            <button onclick="changeSize(2)">تكبير +</button>
+            <button onclick="changeSize(-2)">تصغير -</button>
+        </div>
+        <div class="row">
             <button onclick="changeStyle('color', '#D4AF37')">ذهبي</button>
             <button onclick="changeStyle('color', '#FFF')">أبيض</button>
             <button onclick="changeStyle('color', '#FF4444')">أحمر</button>
         </div>
     </div>
 
-    <!-- الشريط الرئيسي -->
     <div id="main-dock">
         <div class="icon" onclick="togglePen()">🖋️</div>
         <div class="icon" onclick="alert('خلفيات')">🖼️</div>
@@ -49,30 +49,23 @@
             const sub = document.getElementById('sub-dock');
             sub.style.display = (sub.style.display === 'flex') ? 'none' : 'flex';
         }
-
-        let glowActive = false;
-        let currentGlowColor = '#D4AF37';
-
         function changeStyle(prop, val) {
             const el = document.getElementById('text-content');
-            if(prop === 'color') { 
-                el.style.color = val; 
-                document.getElementById('text-container').style.borderColor = val; 
-                currentGlowColor = val;
-                if(glowActive) applyGlow(val);
-            } else el.style[prop] = val;
+            if(prop === 'color') { el.style.color = val; document.getElementById('text-container').style.borderColor = val; }
+            else el.style[prop] = val;
         }
-
+        function changeSize(step) {
+            const el = document.getElementById('text-content');
+            let currentSize = parseInt(window.getComputedStyle(el).fontSize);
+            el.style.fontSize = (currentSize + step) + 'px';
+        }
+        let glowActive = false;
         function toggleGlow() {
             glowActive = !glowActive;
-            applyGlow(currentGlowColor);
-        }
-
-        function applyGlow(color) {
             const el = document.getElementById('text-content');
+            const color = el.style.color || '#D4AF37';
             el.style.textShadow = glowActive ? `0 0 10px ${color}, 0 0 20px ${color}` : 'none';
         }
-
         const el = document.getElementById('text-container');
         el.addEventListener('pointermove', (e) => {
             if(e.pointerType === 'touch' && document.activeElement.id !== 'text-content') {
@@ -83,4 +76,4 @@
         }, {passive: false});
     </script>
 </body>
-</html>
+            </html>
