@@ -1,166 +1,320 @@
 // NoorWaSakina Studio
-// Main JavaScript File v1.1
+// Main JavaScript File v1.2
 
 
 document.addEventListener("DOMContentLoaded", () => {
 
 
-    console.log("NoorWaSakina Studio بدأ العمل بنجاح");
+console.log("NoorWaSakina Studio يعمل بنجاح");
 
 
-    const textContent = document.getElementById("text-content");
 
+const textContent = document.getElementById("text-content");
 
-    const textBtn = document.getElementById("textBtn");
-    const bgBtn = document.getElementById("bgBtn");
-    const effectsBtn = document.getElementById("effectsBtn");
-    const saveBtn = document.getElementById("saveBtn");
 
+const textBtn = document.getElementById("textBtn");
+const bgBtn = document.getElementById("bgBtn");
+const effectsBtn = document.getElementById("effectsBtn");
+const saveBtn = document.getElementById("saveBtn");
 
-    const textPanel = document.getElementById("text-panel");
-    const bgPanel = document.getElementById("bg-panel");
-    const effectsPanel = document.getElementById("effects-panel");
 
 
+const textPanel = document.getElementById("text-panel");
+const bgPanel = document.getElementById("bg-panel");
+const effectsPanel = document.getElementById("effects-panel");
 
-    // إخفاء كل اللوحات
 
-    function hidePanels(){
 
-        textPanel.style.display = "none";
-        bgPanel.style.display = "none";
-        effectsPanel.style.display = "none";
+const fontSelect = document.getElementById("fontSelect");
+const textColor = document.getElementById("textColor");
 
-    }
 
 
+function hidePanels(){
 
-    // زر النص
+    textPanel.style.display="none";
+    bgPanel.style.display="none";
+    effectsPanel.style.display="none";
 
-    textBtn.addEventListener("click", () => {
+}
 
-        hidePanels();
 
-        textPanel.style.display = "block";
 
-        textContent.focus();
 
-    });
+// زر النص
 
+textBtn.onclick = ()=>{
 
+    hidePanels();
 
-    // زر الخلفية
+    textPanel.style.display="block";
 
-    bgBtn.addEventListener("click", () => {
+    textContent.focus();
 
-        hidePanels();
+};
 
-        bgPanel.style.display = "block";
 
-    });
 
+// زر الخلفية
 
+bgBtn.onclick = ()=>{
 
-    // زر المؤثرات
+    hidePanels();
 
-    effectsBtn.addEventListener("click", () => {
+    bgPanel.style.display="block";
 
-        hidePanels();
+};
 
-        effectsPanel.style.display = "block";
 
-    });
 
+// زر المؤثرات
 
+effectsBtn.onclick = ()=>{
 
-    // تكبير النص
+    hidePanels();
 
-    window.increaseText = function(){
+    effectsPanel.style.display="block";
 
-        let size = parseInt(
-            window.getComputedStyle(textContent).fontSize
-        );
+};
 
-        textContent.style.fontSize = (size + 4) + "px";
 
-    };
 
 
 
-    // تصغير النص
+// تغيير الخط
 
-    window.decreaseText = function(){
 
-        let size = parseInt(
-            window.getComputedStyle(textContent).fontSize
-        );
+fontSelect.onchange = ()=>{
 
-        if(size > 20){
+    textContent.style.fontFamily =
+    fontSelect.value;
 
-            textContent.style.fontSize = (size - 4) + "px";
+};
 
-        }
 
-    };
 
 
+// تغيير اللون
 
-    // تغيير الخلفية
 
-    window.changeBackground = function(){
+textColor.oninput = ()=>{
 
-        document.getElementById("preview").style.background =
-        "linear-gradient(to bottom,#355c7d,#6c5b7b)";
+    textContent.style.color =
+    textColor.value;
 
-    };
+};
 
 
 
-    // إضافة إضاءة للنص
 
-    window.addGlow = function(){
 
-        textContent.style.textShadow =
-        "0 0 20px #ffe79a";
 
-    };
+// تكبير النص
 
 
+window.increaseText = ()=>{
 
-    // زر الحفظ
 
-    saveBtn.addEventListener("click", () => {
+let size=parseInt(
+window.getComputedStyle(textContent).fontSize
+);
 
 
-        const savedText = textContent.innerText;
+textContent.style.fontSize =
+(size+4)+"px";
 
 
-        localStorage.setItem(
-            "NoorWaSakinaText",
-            savedText
-        );
+};
 
 
-        alert("تم حفظ النص بنجاح");
 
 
-    });
 
 
+// تصغير النص
 
-    // استرجاع النص المحفوظ
 
+window.decreaseText = ()=>{
 
-    const oldText = localStorage.getItem(
-        "NoorWaSakinaText"
-    );
 
+let size=parseInt(
+window.getComputedStyle(textContent).fontSize
+);
 
-    if(oldText){
 
-        textContent.innerText = oldText;
+if(size>20){
 
-    }
+textContent.style.fontSize =
+(size-4)+"px";
+
+}
+
+
+};
+
+
+
+
+
+
+
+
+// الخلفيات
+
+
+window.background1 = ()=>{
+
+
+document.getElementById("preview").style.background =
+"linear-gradient(to bottom,#6d8fbd,#243b55)";
+
+
+};
+
+
+
+
+window.background2 = ()=>{
+
+
+document.getElementById("preview").style.background =
+"linear-gradient(to bottom,#355c7d,#6c5b7b)";
+
+
+};
+
+
+
+
+window.background3 = ()=>{
+
+
+document.getElementById("preview").style.background =
+"linear-gradient(to bottom,#134e5e,#71b280)";
+
+
+};
+
+
+
+
+
+
+// المؤثرات
+
+
+window.goldGlow = ()=>{
+
+
+textContent.style.textShadow =
+"0 0 20px #ffd86b";
+
+
+};
+
+
+
+
+
+window.softShadow = ()=>{
+
+
+textContent.style.textShadow =
+"3px 3px 8px #000";
+
+
+};
+
+
+
+
+
+window.clearEffects = ()=>{
+
+
+textContent.style.textShadow="none";
+
+
+};
+
+
+
+
+
+
+
+// الحفظ
+
+
+saveBtn.onclick=()=>{
+
+
+localStorage.setItem(
+"NoorWaSakinaText",
+textContent.innerText
+);
+
+
+localStorage.setItem(
+"NoorWaSakinaFont",
+textContent.style.fontFamily
+);
+
+
+localStorage.setItem(
+"NoorWaSakinaColor",
+textContent.style.color
+);
+
+
+
+alert("تم حفظ العمل بنجاح");
+
+
+};
+
+
+
+
+
+
+
+// استرجاع البيانات
+
+
+const oldText =
+localStorage.getItem("NoorWaSakinaText");
+
+
+if(oldText){
+
+textContent.innerText=oldText;
+
+}
+
+
+
+const oldFont =
+localStorage.getItem("NoorWaSakinaFont");
+
+
+if(oldFont){
+
+textContent.style.fontFamily=oldFont;
+
+}
+
+
+
+const oldColor =
+localStorage.getItem("NoorWaSakinaColor");
+
+
+if(oldColor){
+
+textContent.style.color=oldColor;
+
+}
 
 
 
