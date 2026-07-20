@@ -4,83 +4,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>استوديو نور وسكينة</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Amiri&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Amiri&family=Aref+Ruqaa&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
+
 
 <header id="top-bar">
     <h1>🌿 استوديو نور وسكينة</h1>
 </header>
 
 
+
 <main id="workspace">
+
 
     <div id="preview">
 
+
         <div id="text-container">
+
 
             <div id="text-content" contenteditable="true" spellcheck="false">
 بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيمِ
             </div>
 
+
         </div>
 
+
     </div>
+
 
 </main>
 
 
+
+
 <!-- لوحة التحكم -->
+
 <section id="control-panel">
 
+
+
+    <!-- إعدادات النص -->
+
     <div id="text-panel" class="panel">
+
+
         <h3>🖋️ إعدادات النص</h3>
 
-        <button onclick="increaseText()">تكبير الخط</button>
-        <button onclick="decreaseText()">تصغير الخط</button>
+
+        <button onclick="increaseText()">تكبير</button>
+
+        <button onclick="decreaseText()">تصغير</button>
+
+
+        <select id="fontSelect">
+
+            <option value="Amiri">خط أميري</option>
+
+            <option value="Cairo">خط كايرو</option>
+
+            <option value="Aref Ruqaa">خط الرقعة</option>
+
+        </select>
+
+
+        <input type="color" id="textColor" value="#f8ebbb">
+
 
     </div>
+
+
+
+
+
+    <!-- إعدادات الخلفية -->
 
 
     <div id="bg-panel" class="panel">
+
+
         <h3>🖼️ الخلفية</h3>
 
-        <button onclick="changeBackground()">تغيير الخلفية</button>
+
+        <button onclick="background1()">خلفية 1</button>
+
+        <button onclick="background2()">خلفية 2</button>
+
+        <button onclick="background3()">خلفية 3</button>
+
 
     </div>
+
+
+
+
+
+    <!-- إعدادات المؤثرات -->
 
 
     <div id="effects-panel" class="panel">
+
+
         <h3>✨ المؤثرات</h3>
 
-        <button onclick="addGlow()">إضاءة النص</button>
+
+        <button onclick="goldGlow()">توهج ذهبي</button>
+
+        <button onclick="softShadow()">ظل ناعم</button>
+
+        <button onclick="clearEffects()">إزالة</button>
+
 
     </div>
+
 
 
 </section>
 
 
+
+
+
 <nav id="main-dock">
+
 
     <button id="textBtn">🖋️ النص</button>
 
+
     <button id="bgBtn">🖼️ الخلفية</button>
+
 
     <button id="effectsBtn">✨ المؤثرات</button>
 
+
     <button id="saveBtn">💾 حفظ</button>
+
 
 </nav>
 
 
+
+
 <script src="script.js"></script>
+
 
 </body>
 
-        </html>
+</html>
